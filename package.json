@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "co": "^4.6.0",
+    "files-walker": "https://github.com/stuarqi/files-walker/archive/v1.0.0.tar.gz"
+  }
 }
