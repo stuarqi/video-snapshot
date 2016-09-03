@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+const path = require('path');
+const program = require('commander');
+
+const {snapshotSingle, snapshotVideo, snapshotDir} = require('../');
+
+program
+  .version('1.0.0')
+  .usage('[options]')
+  .option('-f, --file <filePath>', 'The path of video file')
+  .option('-i, --interval <interval>', 'Snapshot interval(s), default 300')
+  .option('-o, --outdir <outputdir>', 'Path of output directory')
+  .option('-c, --continuous', 'Enable continuous snapshot')
+  .option('-t, --time <time>', 'The time of single snapshot')
+  .parse(process.argv);
+
+let file = program.file;
+
+if (file) {
+  const savePath = program.outdir;
+  if (!path.isAbsolute(file)) {
+    target = path.resolve(process.cwd(), file);
+  }
+  if (program.continuous) {
+    const interval = program.interval;
+    snapshotVideo(file, {
+      interval,
+      savePath
+    }).then(console.log('Done'));
+  } else {
+    const time = program.time;
+    snapshotSingle(file, {
+      savePath,
+      time
+    }).then(console.log('Done'));
+  }
+} else {
+  console.log('Require the path of video file');
+}

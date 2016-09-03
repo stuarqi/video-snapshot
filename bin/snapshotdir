@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+const path = require('path');
+const program = require('commander');
+
+const {snapshotSingle, snapshotVideo, snapshotDir} = require('../');
+
+program
+  .version('1.0.0')
+  .usage('[options]')
+  .option('-d, --dir <dirPath>', 'The directory of target')
+  .option('-i, --interval <interval>', 'Snapshot interval(s), default 300')
+  .option('-o, --outdir <outputdir>', 'Path of output directory')
+  .parse(process.argv);
+
+let dir = program.dir;
+const interval = program.interval;
+const savePath = program.outdir || 'snapshot';
+if (dir) {
+  console.log(dir);
+  if (!path.isAbsolute(dir)) {
+    dir = path.resolve(process.cwd(), dir);
+  }
+  snapshotDir(dir, {
+    interval,
+    savePath
+  }).then(console.log('Done'));
+} else {
+  console.log('Require the path of target directory');
+}

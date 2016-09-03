@@ -13,11 +13,21 @@ const {
 
 const { fileExists, createDir } = utils;
 
+function snapshotSingle(filePath, opts) {
+  opts = opts || {};
+  const savePath = opts.savePath || path.dirname(filePath);
+  const time = opts.time || 0;
+
+  return fileExists(filePath)
+    .then(() => getVideoInfo(filePath))
+    .then(() => snapshot(filePath, time, path.resolve(savePath, `${path.basename(filePath)}.jpg`)))
+    .catch(err => console.log(err));
+}
 
 function snapshotVideo(filePath, opts) {
   opts = opts || {};
   const interval = opts.interval || 300;
-  const savePath = opts.savePath;
+  const savePath = opts.savePath || path.dirname(filePath);
 
   return fileExists(filePath)
     .then(() => getVideoInfo(filePath))
@@ -58,10 +68,16 @@ function snapshotDir(dirPath, opts) {
   });
 }
 
-snapshotDir('\\\\192.168.0.116\\var\\other', {
-// snapshotDir('D:\\', {
+module.exports = {
+  snapshotSingle,
+  snapshotVideo,
+  snapshotDir
+};
+
+/*snapshotDir('\\\\192.168.0.116\\var\\other', {
+// snapshotDir('E:\\', {
   savePath: 'snapshot',
   interval: 120
 })
   .then(() => console.log('Done'))
-  .catch(err => console.log(err));
+  .catch(err => console.log(err));*/

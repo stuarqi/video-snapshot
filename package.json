@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "snapshot": "./bin/snapshot",
+    "snapshotdir": "./bin/snapshotdir"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "co": "^4.6.0",
+    "commander": "^2.9.0",
     "files-walker": "https://github.com/stuarqi/files-walker/archive/v1.0.0.tar.gz"
   }
 }
